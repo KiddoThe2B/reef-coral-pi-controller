@@ -26,8 +26,8 @@ Hardware Requirements V0.1
 
 Development Environment & Tools
 -------------------------------
-•	Raspbian Jessie
-•	Java 8
-•	NetBeans 8
-•	Apache Maven 3
-•	Pi4J API V1.0
+*	Raspbian Jessie
+*	Java 8
+*	NetBeans 8
+*	Apache Maven 3
+*	Pi4J API V1.0
