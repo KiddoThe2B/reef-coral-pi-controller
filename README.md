@@ -9,7 +9,7 @@ User Requirements V0.1
 * Operate heaters & fans
 * Operate (Switch on/off) main & sump lighting
 * Live Camera Feed
-* Control via Web User Interface
+* Control Remotely via Web User Interface
 
 Hardware Requirements V0.1
 --------------------------
