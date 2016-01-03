@@ -30,4 +30,5 @@ Development Environment & Tools
 *	Java 8
 *	NetBeans 8
 *	Apache Maven 3
+*	Spring MVC 4
 *	Pi4J API V1.0
