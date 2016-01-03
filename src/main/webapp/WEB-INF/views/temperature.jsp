@@ -63,11 +63,11 @@
             background-color: #666;
         }
         
-        #footer{
-            position:absolute;
-            width:100%;
-            bottom:20px; 
-        }
+        #footer {
+                position:absolute;
+                width:100%;
+                height:60px;   /* Height of the footer */
+            }
         
         #more{
             position: absolute;

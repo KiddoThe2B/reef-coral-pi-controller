@@ -80,6 +80,20 @@ public class MainController {
 		return "lighting";
 	}
         
+        @RequestMapping(value = "/camera", method = RequestMethod.GET)
+	public String camera(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, Locale.ENGLISH);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "camera";
+	}
+        
         @RequestMapping(value = "/temperature", method = RequestMethod.GET)
 	public String temperature(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -114,6 +128,23 @@ public class MainController {
 		return "temperature";
 	}
         
+        @RequestMapping(value = "/sump", method = RequestMethod.GET)
+	public String sump(Locale locale, Model model) {
+                logger.info("Welcome home! The client locale is {}.", locale);
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, Locale.ENGLISH);
+		String formattedDate = dateFormat.format(date);
+                
+                DecimalFormat df = new DecimalFormat("#.0");
+                
+                String level = "12.4";//df.format(GPIOService.measureDistance());
+                model.addAttribute("Level",level);
+                model.addAttribute("Pins",GPIOService.getAllPins());
+                model.addAttribute("Levels",WaterLevelDAO.getWaterLevels());
+		return "sump";
+        }
+        
         @RequestMapping(value = "/updatetemp", method = RequestMethod.GET)
 	public String updateTemperature(Locale locale, Model model) {
 		
@@ -145,6 +176,25 @@ public class MainController {
                 model.addAttribute("waterTemp",waterTemp);
                 model.addAttribute("Pins",GPIOService.getAllPins());
 		return "temp";
+	}
+        
+        @RequestMapping(value = "/updatewaterlevel", method = RequestMethod.GET)
+	public String updateWaterLevel(Locale locale, Model model) {
+		
+		Date date = new Date();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
+		
+		String formattedDate = dateFormat.format(date);
+                
+                float dis = GPIOService.measureDistance();
+                
+                WaterLevel level = new WaterLevel(formattedDate,dis);
+                
+                WaterLevelDAO.setWaterLevel(level);
+                //model.addAttribute("roomTemp",output);
+                //model.addAttribute("waterTemp",waterTemp);
+                //model.addAttribute("Pins",GPIOService.getAllPins());
+		return "ok";
 	}
         
         @RequestMapping(value = "/switch/{id:\\d+}", method = RequestMethod.GET)

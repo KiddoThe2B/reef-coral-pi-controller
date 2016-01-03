@@ -123,58 +123,12 @@
 
     <div class="container">
       <div class="row" >
-        <div id="comp_box" class="col-md-4">
-           
-            <div><h2>Temperature</h2></div>
-          <p><table>
-	<tr><td>Room Temp.</td><td style="text-align: center;">${roomTemp}°C</td></tr>
-	<tr><td>Water Temp.</td><td style="color: green; text-align: center;"><b>${waterTemp}°C</b></td></tr>
-        <tr><td>Heater</td><td style="text-align: center;"><input type="checkbox" id="toggle-button" onchange="switchRelay(1)"  <c:if test="${Pins[0] == 'HIGH'}"> checked</c:if>></td></tr>
-	<tr><td>Fans</td><td style="text-align: center;"><input type="checkbox" id="toggle-button2" onchange="switchRelay(2)" <c:if test="${Pins[1] == 'HIGH'}"> checked</c:if>></td></tr>
-	</table></p>
-	<p><a id="more" class="btn btn-default" href="/ReefCoralPi/temperature" role="button">View details »</a></p>
-        </div>
-        <div id="comp_box" class="col-md-4">
-          <h2>Lighting</h2>
-          <p><table>
-	<tr><td>Main Display</td><td style="text-align: center;"><input type="checkbox" id="toggle-button3" onchange="switchRelay(3)" <c:if test="${Pins[2] == 'HIGH'}"> checked</c:if>></td></tr>
-        <tr><td>P: 16:00 - 23:00</td></tr>
-        <tr><td>P: 00:00 - 00:00</td></tr>
-	</table></p>
-	<p><a id="more" class="btn btn-default" href="/ReefCoralPi/lighting" role="button">View details »</a></p>
-       </div>
-       <div id="comp_box" class="col-md-4">
-          <h2>Sump</h2>
-          <p><table>
-             <tr><td>Chaeto Lighting</td><td style="text-align: center;"><input type="checkbox" id="toggle-button4" onchange="switchRelay(4)" <c:if test="${Pins[3] == 'HIGH'}"> checked</c:if>></td></tr>
-	     <tr><td>Water Level</td><td style="text-align: center; color: green;"><input type="checkbox" id="toggle-button6" >15cm</td></tr>
-              <tr><td>DC Pump</td><td style="text-align: center;"><input type="checkbox" id="toggle-button7" checked disabled ></td></tr>
-          </table></p>
-          <p><a id="more" class="btn btn-default" href="/ReefCoralPi/sump" role="button">View details »</a></p>
-        </div>
-      </div>
-      <div class="row" >
-        <div id="comp_box" class="col-md-4">
-          <h2>Circulators</h2>
-          <p><table>
-             <tr><td>Circulator #1</td><td style="text-align: center;"><input type="checkbox" id="toggle-button5" checked disabled></td></tr>
-	     <tr><td>Circulator #2</td><td style="text-align: center;"><input type="checkbox" id="toggle-button6" checked disabled></td></tr>
-		 </table></p>
-        </div>      
-        <div id="comp_box" class="col-md-4" style="min-width:200px">
-          <h2>Live Feed</h2>
-          <p><table>
-              <tr><td>Camera:</td><td style="text-align: center;"><input type="checkbox" id="toggle-button8" checked disabled></td></tr></table></p>
-          <p><a id="more" class="btn btn-default" href="/ReefCoralPi/camera" role="button">View details »</a></p>
-        </div>
-	<div id="comp_box" class="col-md-4" style="min-width:200px">
-          <h2>Feeder</h2>
-          <p><table>
-          <tr><td>Auto Feed:</td><td style="text-align: center;"><input type="checkbox" checked id="toggle-button9" ></td></tr></table></p>
-          <p><a id="more" class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div>
-       </div>
+          <div style="width:100%"><h2 style="text-align:center;">Live Feed</h2></div>
+          <div>
+        <img style="height: 500px; margin-top: -15px;" src="http://i1352.photobucket.com/albums/q652/KiddoTheGreek/Kiddo%20Reef%20Project%20vol2/IMG_0523_zpsihnq1tk7.jpg"/>
+          </div>
      </div>
+    </div>
     <div id="footer" style="text-align: center;" >
             <h5><img src="http://i1352.photobucket.com/albums/q652/KiddoTheGreek/ReefCoral%20Pi%20Project/favicon_zpshnjk3x4e.png" width="25"/> Reef Coral Project - Kiddo Productions &#169; </h5>
     </div>

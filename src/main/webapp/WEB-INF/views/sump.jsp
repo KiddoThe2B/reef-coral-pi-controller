@@ -3,7 +3,6 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<c:url var="home" value="/" scope="request" />
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -33,19 +32,19 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-	
+    
     <style>
         h1,h2,h3 {
             font-family: 'Quicksand', sans-serif;
         }
         
         tr{
-            min-width: 200px;
+            min-width: 80px;
             height: 40px;
         }
         
         td{
-           min-width: 100px;
+           min-width: 40px;
         }
         
         #comp_box{
@@ -75,7 +74,53 @@
             bottom:   20px;
         }
     </style>
-     <script>
+    
+    <script type="text/javascript">
+window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+        title: {
+            text: "Water Level Analysis"             
+        },
+        animationEnabled: true,
+        axisX:{      
+            interval: 1,
+            xValueType: "dateTime"
+            // labelAngle : 30,
+            // valueFormatString: "HHmm'hrs'"
+
+        },
+        axisY: {
+            title: "Water Level",
+            minimum: 15,
+            maximum: 30
+        },
+        legend: {
+            verticalAlign: "bottom",
+            horizontalAlign: "center"
+        },
+
+        data: [{        
+            name: "water",
+            showInLegend: true,
+            legendMarkerType: "square",
+            type: "area",
+            color: "rgba(40,175,101,0.6)",
+            markerSize: 0,
+    <c:set var="count" value="0"/>
+            dataPoints: [
+            <c:forEach var="temp" items="${Levels}" varStatus="loop">
+                    <c:set var="count" value="${count+1}"/>
+               {x:${temp.getTime()},y:${temp.getLevel()} }<c:if test="${count<Levels.size()}">,</c:if>           
+            </c:forEach>
+            ]
+        }]
+    });
+
+chart.render();
+}
+</script>
+    <script>
        function switchRelay(id){
            event.preventDefault();
            $.ajax({
@@ -123,68 +168,50 @@
 
     <div class="container">
       <div class="row" >
-        <div id="comp_box" class="col-md-4">
+        <div id="comp_box" class="col-md-12">
            
-            <div><h2>Temperature</h2></div>
-          <p><table>
-	<tr><td>Room Temp.</td><td style="text-align: center;">${roomTemp}°C</td></tr>
-	<tr><td>Water Temp.</td><td style="color: green; text-align: center;"><b>${waterTemp}°C</b></td></tr>
-        <tr><td>Heater</td><td style="text-align: center;"><input type="checkbox" id="toggle-button" onchange="switchRelay(1)"  <c:if test="${Pins[0] == 'HIGH'}"> checked</c:if>></td></tr>
-	<tr><td>Fans</td><td style="text-align: center;"><input type="checkbox" id="toggle-button2" onchange="switchRelay(2)" <c:if test="${Pins[1] == 'HIGH'}"> checked</c:if>></td></tr>
-	</table></p>
-	<p><a id="more" class="btn btn-default" href="/ReefCoralPi/temperature" role="button">View details »</a></p>
+          <div style="width:100%"><h2 style="text-align:center;">Sump</h2></div>
+          <div class="row" style="padding: 10px;">
+	<div class="col-md-2"><table><tr><td>Water Level:</td><td>${waterTemp}°C</td></tr></table></div>
+        <div class="col-md-2"><table><tr><td>Chaeto Lighting</td><td><input type="checkbox" id="toggle-button" onchange="switchRelay()"  <c:if test="${Pins[3] == 'HIGH'}">checked</c:if>></td></tr></table></div>
         </div>
-        <div id="comp_box" class="col-md-4">
-          <h2>Lighting</h2>
-          <p><table>
-	<tr><td>Main Display</td><td style="text-align: center;"><input type="checkbox" id="toggle-button3" onchange="switchRelay(3)" <c:if test="${Pins[2] == 'HIGH'}"> checked</c:if>></td></tr>
-        <tr><td>P: 16:00 - 23:00</td></tr>
-        <tr><td>P: 00:00 - 00:00</td></tr>
-	</table></p>
-	<p><a id="more" class="btn btn-default" href="/ReefCoralPi/lighting" role="button">View details »</a></p>
-       </div>
-       <div id="comp_box" class="col-md-4">
-          <h2>Sump</h2>
-          <p><table>
-             <tr><td>Chaeto Lighting</td><td style="text-align: center;"><input type="checkbox" id="toggle-button4" onchange="switchRelay(4)" <c:if test="${Pins[3] == 'HIGH'}"> checked</c:if>></td></tr>
-	     <tr><td>Water Level</td><td style="text-align: center; color: green;"><input type="checkbox" id="toggle-button6" >15cm</td></tr>
-              <tr><td>DC Pump</td><td style="text-align: center;"><input type="checkbox" id="toggle-button7" checked disabled ></td></tr>
-          </table></p>
-          <p><a id="more" class="btn btn-default" href="/ReefCoralPi/sump" role="button">View details »</a></p>
+          <div class="row">
+              <c:if test="${not empty Levels}">
+              <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+              </c:if>
+              <c:if test="${empty Levels}">
+              THERE ARE NOT LEVELS!!!
+              </c:if>
+          </div>
+          <div class="row">
+            <table class="table table-striped">
+                <tr>
+                    <th>DateTime</th>
+                    <th>Water Level</th>
+                </tr>
+                <c:forEach var="temp" items="${Levels}" varStatus="loop">
+                <tr>
+                    <td>${temp.getDate()}</td>
+                    <td>${temp.getLevel()} cm</td>
+                </tr>
+                </c:forEach>
+                
+            </table>
+          </div>
         </div>
       </div>
-      <div class="row" >
-        <div id="comp_box" class="col-md-4">
-          <h2>Circulators</h2>
-          <p><table>
-             <tr><td>Circulator #1</td><td style="text-align: center;"><input type="checkbox" id="toggle-button5" checked disabled></td></tr>
-	     <tr><td>Circulator #2</td><td style="text-align: center;"><input type="checkbox" id="toggle-button6" checked disabled></td></tr>
-		 </table></p>
-        </div>      
-        <div id="comp_box" class="col-md-4" style="min-width:200px">
-          <h2>Live Feed</h2>
-          <p><table>
-              <tr><td>Camera:</td><td style="text-align: center;"><input type="checkbox" id="toggle-button8" checked disabled></td></tr></table></p>
-          <p><a id="more" class="btn btn-default" href="/ReefCoralPi/camera" role="button">View details »</a></p>
-        </div>
-	<div id="comp_box" class="col-md-4" style="min-width:200px">
-          <h2>Feeder</h2>
-          <p><table>
-          <tr><td>Auto Feed:</td><td style="text-align: center;"><input type="checkbox" checked id="toggle-button9" ></td></tr></table></p>
-          <p><a id="more" class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div>
-       </div>
-     </div>
+    </div>
+        
     <div id="footer" style="text-align: center;" >
             <h5><img src="http://i1352.photobucket.com/albums/q652/KiddoTheGreek/ReefCoral%20Pi%20Project/favicon_zpshnjk3x4e.png" width="25"/> Reef Coral Project - Kiddo Productions &#169; </h5>
     </div>
-       
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/jquery.canvasjs.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
@@ -228,6 +255,6 @@
         });
       });
     </script>
-   
 </body>
 </html>
+

@@ -13,6 +13,8 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -92,15 +94,19 @@ public class GPIOService {
         trig.low();
     }
     
-    public float measureDistance() throws Exception {
+    public static float measureDistance(){
         triggerSensor();
-        waitForSignal();
-        long duration = this.measureSignal();
+        try {
+            waitForSignal();
+        } catch (Exception ex) {
+            Logger.getLogger(GPIOService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        long duration = measureSignal();
         
         return duration * SOUND_SPEED / ( 2 * 10000 );
     }
 
-    private void triggerSensor() {
+    private static void triggerSensor() {
         try {
             trig.high();
             Thread.sleep( 0, TRIG_DURATION_IN_MICROS * 1000 );
@@ -110,7 +116,7 @@ public class GPIOService {
         }
     }
     
-    private void waitForSignal() throws Exception {
+    private static void waitForSignal() throws Exception {
         int countdown = TIMEOUT;
         
         while( echo.isLow() && countdown > 0 ) {
@@ -123,7 +129,7 @@ public class GPIOService {
     }
     
 
-    private long measureSignal(){
+    private static long measureSignal(){
         int countdown = TIMEOUT;
         long start = System.nanoTime();
         while( echo.isHigh() && countdown > 0 ) {
