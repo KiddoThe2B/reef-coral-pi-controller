@@ -29,7 +29,7 @@ public class GPIOService {
 
     private final static int TIMEOUT = 2100;
     static final GpioPinDigitalInput echo = gpio.provisionDigitalInputPin(RaspiPin.GPIO_06);
-    static final GpioPinDigitalOutput trig = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Trig", PinState.LOW);
+    static final GpioPinDigitalOutput trig = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Trig", PinState.LOW);
     static final GpioPinDigitalOutput heater = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Heater", PinState.HIGH);
     static final GpioPinDigitalOutput fans = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Fans", PinState.LOW);
     static final GpioPinDigitalOutput lights = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Lighting", PinState.HIGH);

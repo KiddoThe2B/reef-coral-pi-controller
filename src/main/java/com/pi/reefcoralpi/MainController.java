@@ -5,9 +5,6 @@
  */
 package com.pi.reefcoralpi;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -21,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import java.util.Random;
 /**
  * Handles requests for the application home page.
  */
@@ -41,24 +37,11 @@ public class MainController {
 		String formattedDate = dateFormat.format(date);
                 
                 
-                InputStream in = null;
-                String output = "NONE";
-                DecimalFormat df = new DecimalFormat("#.0");
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader("/sys/bus/w1/devices/28-0000075f2b76/w1_slave"));
-                    System.out.println(reader.readLine());
-                    double temp = Double.parseDouble(reader.readLine().split("=")[1])/ (double) 1000;
-                    output = df.format(temp);
-                }
-		catch(Exception ex){
-                    System.err.println(ex.toString());
-                }
-                
-                Random rand = new Random();
-                String waterTemp= df.format(Float.parseFloat(output) + 6 +rand.nextFloat()*4);
+                String roomTemp = Temperature.readTemp(1);
+                String waterTemp= Temperature.readTemp(2);
                 
 		model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("roomTemp",output);
+		model.addAttribute("roomTemp",roomTemp);
                 model.addAttribute("waterTemp",waterTemp);
                 model.addAttribute("Pins",GPIOService.getAllPins());
 
@@ -103,25 +86,11 @@ public class MainController {
 		String formattedDate = dateFormat.format(date);
                 
                 
-                InputStream in = null;
-                String output = "NONE";
-                DecimalFormat df = new DecimalFormat("#.0");
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader("/sys/bus/w1/devices/28-0000075f2b76/w1_slave"));
-                    System.out.println(reader.readLine());
-                    double temp = Double.parseDouble(reader.readLine().split("=")[1])/ (double) 1000;
-                    
-                    output = df.format(temp);
-                }
-		catch(Exception ex){
-                    System.err.println(ex.toString());
-                }
-                
-                Random rand = new Random();
-                String waterTemp= df.format(Float.parseFloat(output) + 6 +rand.nextFloat()*4);
+                String roomTemp = Temperature.readTemp(1);
+                String waterTemp= Temperature.readTemp(2);
                 
 		model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("roomTemp",output);
+		model.addAttribute("roomTemp",roomTemp);
                 model.addAttribute("waterTemp",waterTemp);
                 model.addAttribute("Pins",GPIOService.getAllPins());
                 model.addAttribute("Temps",TemperatureDAO.getTemperatures());
@@ -154,25 +123,13 @@ public class MainController {
 		String formattedDate = dateFormat.format(date);
                 
                 
-                InputStream in = null;
-                String output = "NONE";
-                DecimalFormat df = new DecimalFormat("#.0");
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader("/sys/bus/w1/devices/28-0000075f2b76/w1_slave"));
-                    System.out.println(reader.readLine());
-                    double temp = Double.parseDouble(reader.readLine().split("=")[1])/ (double) 1000;
-                    output = df.format(temp);
-                }
-		catch(Exception ex){
-                    System.err.println(ex.toString());
-                }
-                Random rand = new Random();
-                String waterTemp= df.format(Float.parseFloat(output) + 6 +rand.nextFloat()*4);
+                String roomTemp = Temperature.readTemp(1);
+                String waterTemp= Temperature.readTemp(2);
                 
-                Temperature temp = new Temperature(formattedDate,Float.parseFloat(output),Float.parseFloat(waterTemp));
+                Temperature temp = new Temperature(formattedDate,Float.parseFloat(roomTemp),Float.parseFloat(waterTemp));
                 
                 TemperatureDAO.setTemperature(temp);
-                model.addAttribute("roomTemp",output);
+                model.addAttribute("roomTemp",roomTemp);
                 model.addAttribute("waterTemp",waterTemp);
                 model.addAttribute("Pins",GPIOService.getAllPins());
 		return "temp";

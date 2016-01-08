@@ -147,7 +147,7 @@
           <h2>Sump</h2>
           <p><table>
              <tr><td>Chaeto Lighting</td><td style="text-align: center;"><input type="checkbox" id="toggle-button4" onchange="switchRelay(4)" <c:if test="${Pins[3] == 'HIGH'}"> checked</c:if>></td></tr>
-	     <tr><td>Water Level</td><td style="text-align: center; color: green;"><input type="checkbox" id="toggle-button6" >15cm</td></tr>
+          <tr><td>Water Level</td><td style="text-align: center; color: green;"><b>15cm</b></td></tr>
               <tr><td>DC Pump</td><td style="text-align: center;"><input type="checkbox" id="toggle-button7" checked disabled ></td></tr>
           </table></p>
           <p><a id="more" class="btn btn-default" href="/ReefCoralPi/sump" role="button">View details »</a></p>

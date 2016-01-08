@@ -124,7 +124,8 @@
     <div class="container">
       <div class="row" >
           <div style="width:100%"><h2 style="text-align:center;">Live Feed</h2></div>
-          <div>
+          <div style="text-align:center;">
+              <br/>
         <img style="height: 500px; margin-top: -15px;" src="http://i1352.photobucket.com/albums/q652/KiddoTheGreek/Kiddo%20Reef%20Project%20vol2/IMG_0523_zpsihnq1tk7.jpg"/>
           </div>
      </div>

@@ -172,9 +172,12 @@ chart.render();
            
           <div style="width:100%"><h2 style="text-align:center;">Sump</h2></div>
           <div class="row" style="padding: 10px;">
-	<div class="col-md-2"><table><tr><td>Water Level:</td><td>${waterTemp}°C</td></tr></table></div>
-        <div class="col-md-2"><table><tr><td>Chaeto Lighting</td><td><input type="checkbox" id="toggle-button" onchange="switchRelay()"  <c:if test="${Pins[3] == 'HIGH'}">checked</c:if>></td></tr></table></div>
-        </div>
+        <div class="col-md-1"></div>
+	<div class="col-md-3"><table><tr><td>Water Level:</td><td>${waterTemp}°C</td></tr></table></div>
+        <div class="col-md-4"><table><tr><td>Chaeto Lighting</td><td><input type="checkbox" id="toggle-button" onchange="switchRelay()"  <c:if test="${Pins[3] == 'HIGH'}">checked</c:if>></td></tr></table></div>
+        <div class="col-md-3"><table><tr><td>DC Pump</td><td><input type="checkbox" id="toggle-button2" checked disabled></td></tr></table></div>
+        <div class="col-md-1"></div>
+          </div>
           <div class="row">
               <c:if test="${not empty Levels}">
               <div id="chartContainer" style="height: 300px; width: 100%;"></div>

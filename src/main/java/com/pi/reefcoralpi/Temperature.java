@@ -5,6 +5,11 @@
  */
 package com.pi.reefcoralpi;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.text.DecimalFormat;
+
  
 /**
  * @author pi
@@ -48,6 +53,30 @@ public class Temperature {
  
     public void setWaterTemp(float temp) {
         this.waterTemp= temp;
+    }
+    
+    static String readTemp(int num){
+        String device = "28-0000075f2b76";
+        if(num == 1){
+            device = "28-0000075f2b76";
+        }
+        else{
+            device = "28-011581dee7ff";
+        }
+        InputStream in = null;
+        String output = "0";
+        DecimalFormat df = new DecimalFormat("#.0");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("/sys/bus/w1/devices/"+device+"/w1_slave"));
+            System.out.println(reader.readLine());
+            double temp = Double.parseDouble(reader.readLine().split("=")[1])/ (double) 1000;
+            output = df.format(temp);
+        }
+        catch(Exception ex){
+            System.err.println(ex.toString());
+        }
+        
+        return output;
     }
  
      
